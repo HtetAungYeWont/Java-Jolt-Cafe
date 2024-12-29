@@ -17,12 +17,12 @@ class Employee
 
     public:
     virtual~Employee() {}
-    int EmpID() { return employee_ID; }
-    string EmpName() { return employee_name; }
-    string EmpPosition() { return employee_position; }
-    string EmpType() { return employee_type; }
-    string StartDate() { return start_date; }
-    double BasicSalary() { return basic_salary; }
+    int empID() { return employee_ID; }
+    string empName() { return employee_name; }
+    string empPosition() { return employee_position; }
+    string empType() { return employee_type; }
+    string startDate() { return start_date; }
+    double basicSalary() { return basic_salary; }
 
     // Default constructor
     Employee() : employee_ID(0), employee_name(""), employee_position(""), employee_type(""), start_date(""), basic_salary(0) {}
@@ -133,7 +133,7 @@ public:
 
     double fulltimeTotalSalary()
     {
-        double salary = BasicSalary();
+        double salary = basicSalary();
 
         // Calculate overtime fees
         overtime_fees = (((salary / 30) / 8) * overtime_hours) * 2;
@@ -196,7 +196,7 @@ public:
 
     double parttimeTotalNetSalary()
     {
-        double salary = BasicSalary();
+        double salary = basicSalary();
         hourly_wage = (salary / 30) / 8;
         total_amount = hourly_wage * working_hours;
         tax_deduction = (total_amount / 100) * 2;
@@ -214,12 +214,12 @@ vector<PartTime> PartTime_Employees;
 // Quick Sort Helper Functions
 int partition(vector<Employee *> &employees, int low, int high)
 {
-    double pivot = employees[high]->BasicSalary();
+    double pivot = employees[high]->basicSalary();
     int i = low - 1;
 
     for (int j = low; j < high; j++)
     {
-        if (employees[j]->BasicSalary() < pivot)
+        if (employees[j]->basicSalary() < pivot)
         {
             i++;
             swap(employees[i], employees[j]);
@@ -330,7 +330,7 @@ int main()
                 cin >> num;
                 for (int i = 0; i < Fulltime_Employees.size(); i++)
                 {
-                    if (num == Fulltime_Employees[i].EmpID())
+                    if (num == Fulltime_Employees[i].empID())
                     {
                         cout << "Updating data for Full-Time Employee ID: " << num << endl;
                         Fulltime_Employees[i].inputFulltimeData();
@@ -351,7 +351,7 @@ int main()
                 cin >> num;
                 for (int i = 0; i < PartTime_Employees.size(); i++)
                 {
-                    if (num == PartTime_Employees[i].EmpID())
+                    if (num == PartTime_Employees[i].empID())
                     {
                         cout << "Updating data for Part-Time Employee ID: " << num << endl;
                         PartTime_Employees[i].inputParttimeData();
@@ -369,7 +369,6 @@ int main()
             {
                 cout << "Invalid Employee Type..." << endl;
             }
-
             break;
         }
         case 3:
@@ -405,11 +404,11 @@ int main()
                     double net_salary = Fulltime_Employees[i].fulltimeTotalNetSalary();
                     double tax_deduction = (total_salary / 100) * 2;
 
-                    cout << left << setw(5) << Fulltime_Employees[i].EmpID()
-                         << setw(7) << Fulltime_Employees[i].EmpName()
-                         << setw(15) << Fulltime_Employees[i].EmpPosition()
-                         << setw(12) << Fulltime_Employees[i].StartDate()
-                         << setw(15) << fixed << setprecision(2) << Fulltime_Employees[i].BasicSalary()
+                    cout << left << setw(5) << Fulltime_Employees[i].empID()
+                         << setw(7) << Fulltime_Employees[i].empName()
+                         << setw(15) << Fulltime_Employees[i].empPosition()
+                         << setw(12) << Fulltime_Employees[i].startDate()
+                         << setw(15) << fixed << setprecision(2) << Fulltime_Employees[i].basicSalary()
                          << setw(12) << Fulltime_Employees[i].LeaveDay()
                          << setw(14) << fixed << setprecision(2) << Fulltime_Employees[i].OvertimeHr()
                          << setw(15) << fixed << setprecision(2) << Fulltime_Employees[i].OvertimeFees()
@@ -449,17 +448,17 @@ int main()
                 // Table Rows
                 for (int i = 0; i < PartTime_Employees.size(); i++)
                 {
-                    double basic_salary = PartTime_Employees[i].BasicSalary();
+                    double basic_salary = PartTime_Employees[i].basicSalary();
                     double working_hours = PartTime_Employees[i].getWorkingHours();
                     double hourly_wage = (basic_salary / 30) / 8;
                     double total_amount = hourly_wage * working_hours;
                     double tax_deduction = (total_amount / 100) * 2;
                     double net_amount = total_amount - tax_deduction - security_tax;
 
-                    cout << left << setw(5) << PartTime_Employees[i].EmpID()
-                         << setw(10) << PartTime_Employees[i].EmpName()
-                         << setw(15) << PartTime_Employees[i].EmpPosition()
-                         << setw(12) << PartTime_Employees[i].StartDate()
+                    cout << left << setw(5) << PartTime_Employees[i].empID()
+                         << setw(10) << PartTime_Employees[i].empName()
+                         << setw(15) << PartTime_Employees[i].empPosition()
+                         << setw(12) << PartTime_Employees[i].startDate()
                          << setw(15) << fixed << setprecision(2) << basic_salary
                          << setw(12) << fixed << setprecision(2) << working_hours
                          << setw(15) << fixed << setprecision(2) << hourly_wage
@@ -503,23 +502,23 @@ int main()
             for (int i = 0; i < all_employees.size(); i++)
             {
                 double net_salary = 0.0;
-                if (all_employees[i]->EmpType() == "fulltime")
+                if (all_employees[i]->empType() == "fulltime")
                 {
                     FullTime *ft = dynamic_cast<FullTime *>(all_employees[i]);
                     net_salary = ft->fulltimeTotalNetSalary();
                     total_fulltime_net_salary += net_salary;
                 }
-                else if (all_employees[i]->EmpType() == "parttime")
+                else if (all_employees[i]->empType() == "parttime")
                 {
                     PartTime *pt = dynamic_cast<PartTime *>(all_employees[i]);
                     net_salary = pt->parttimeTotalNetSalary();
                     total_parttime_net_salary += net_salary;
                 }
 
-                cout << left << setw(10) << all_employees[i]->EmpID()
-                     << setw(20) << all_employees[i]->EmpName()
-                     << setw(15) << all_employees[i]->EmpPosition()
-                     << setw(15) << all_employees[i]->EmpType()
+                cout << left << setw(10) << all_employees[i]->empID()
+                     << setw(20) << all_employees[i]->empName()
+                     << setw(15) << all_employees[i]->empPosition()
+                     << setw(15) << all_employees[i]->empType()
                      << setw(15) << fixed << setprecision(2) << net_salary << endl;
             }
 
@@ -552,3 +551,5 @@ int main()
     }
     return 0;
 }
+
+
